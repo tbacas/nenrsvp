@@ -14,43 +14,8 @@
             console.log("EmailJS initialized successfully");
         })();
     </script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5efe0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .card {
-            background: #fffaf0;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
-            text-align: center;
-        }
-        input, textarea, select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #d4c2a8;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #8b5a2b;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #734a23;
-        }
-    </style>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="card">
@@ -81,15 +46,15 @@
             // Collect form data
             const formData = new FormData(form);
             const templateParams = {
-                name: formData.get("name"),           // Matches {{name}} in EmailJS template
-                email: formData.get("email"),         // Matches {{email}} in EmailJS template
-                attending: formData.get("attending"), // Matches {{attending}} in EmailJS template
-                guests: formData.get("guests"),       // Matches {{guests}} in EmailJS template
-                message: formData.get("message"),     // Matches {{message}} in EmailJS template
+                name: formData.get("name"),
+                email: formData.get("email"),
+                attending: formData.get("attending"),
+                guests: formData.get("guests"),
+                message: formData.get("message"),
             };
 
             // Send email via EmailJS
-            emailjs.send("service_lugz11s", "template_02mfuph", templateParams)
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
                 .then((response) => {
                     console.log("Email sent successfully:", response.status, response.text);
                     form.reset(); // Reset form fields
