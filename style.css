@@ -1,41 +1,89 @@
 /* General styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5efe0;
     margin: 0;
     padding: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: #f5efe0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
+.background {
+    background: linear-gradient(to bottom right, #ece7de, #d8d2c8);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Card container */
 .card {
-    background: #fffaf0;
+    background: #ffffff;
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
     padding: 30px;
     text-align: center;
+    border: 2px solid #d8c8a8;
 }
 
-/* Form inputs and buttons */
-input, textarea, select, button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #d4c2a8;
-    border-radius: 5px;
+/* Header */
+.header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #2c2c2c;
+    margin-bottom: 10px;
+}
+
+.header p {
     font-size: 16px;
+    color: #6c6c6c;
+    margin-bottom: 20px;
 }
 
+/* Input styles */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: border 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border: 1px solid #8b5a2b;
+    outline: none;
+}
+
+/* Button styles */
 button {
     background-color: #8b5a2b;
     color: white;
+    padding: 12px;
     border: none;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -44,6 +92,7 @@ button:hover {
 
 /* Thank you message */
 #thank-you {
-    font-size: 18px;
-    color: #6b4226;
+    font-size: 16px;
+    color: #4d4d4d;
+    margin-top: 20px;
 }
