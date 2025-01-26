@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSVP for the New England Nosh Party</title>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init({
+                publicKey: "WWq4rWeSoXOXmWUko", // Replace with your actual Public Key
+            });
+            console.log("EmailJS initialized successfully");
+        })();
+    </script>
     <style>
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f5efe0;
             margin: 0;
             padding: 0;
@@ -22,23 +32,14 @@
             width: 100%;
             max-width: 500px;
             padding: 30px;
-            border: 1px solid #e6d5b8;
-        }
-        h2 {
             text-align: center;
-            color: #6b4226;
-            font-size: 24px;
         }
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        input, select, button, textarea {
+        input, textarea, select, button {
+            width: 100%;
             padding: 10px;
+            margin: 10px 0;
             border: 1px solid #d4c2a8;
             border-radius: 5px;
-            font-size: 16px;
         }
         button {
             background-color: #8b5a2b;
@@ -49,83 +50,57 @@
         button:hover {
             background-color: #734a23;
         }
-        label {
-            font-weight: bold;
-            color: #6b4226;
-        }
-        .thank-you {
-            text-align: center;
-            color: #6b4226;
-            font-size: 18px;
-        }
     </style>
-   <script type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
-    <script type="text/javascript">
-       (function(){
-          emailjs.init({
-            publicKey: "WWq4rWeSoXOXmWUko", // Replace with your actual public key
-          });
-       })();
-    </script>
 </head>
 <body>
     <div class="card">
-        <div id="form-container">
-            <h2>RSVP for the New England Nosh Party</h2>
-            <form id="rsvp-form">
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-                <label for="attending">Will you attend?</label>
-                <select id="attending" name="attending">
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-                <input type="number" id="guests" name="guests" placeholder="Number of Guests for Dinner" min="0">
-                <input type="number" id="children" name="children" placeholder="Number of Children" min="0">
-                <textarea id="allergies" name="allergies" placeholder="List any food allergies"></textarea>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <div id="thank-you" class="thank-you" style="display: none;">
-            <h2>Thank you for RSVPing!</h2>
-            <p>We look forward to seeing you at the party!</p>
-        </div>
+        <h1>RSVP for the New England Nosh Party</h1>
+        <form id="rsvp-form">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <select name="attending" required>
+                <option value="">Will you attend?</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <input type="number" name="guests" placeholder="Number of Guests" min="0">
+            <textarea name="message" placeholder="Additional Message"></textarea>
+            <button type="submit">Send RSVP</button>
+        </form>
+        <p id="thank-you" style="display: none;">Thank you for RSVPing! We look forward to seeing you at the event!</p>
     </div>
+
     <script>
-        emailjs.init('WWq4rWeSoXOXmWUko'); // Replace 'WWq4rWeSoXOXmWUko' with your actual public key
-        console.log('EmailJS initialized successfully');
+        // Handle form submission
+        const form = document.getElementById("rsvp-form");
+        const thankYouMessage = document.getElementById("thank-you");
 
-        const form = document.getElementById('rsvp-form');
-        const formContainer = document.getElementById('form-container');
-        const thankYou = document.getElementById('thank-you');
-
-        form.addEventListener('submit', function (event) {
+        form.addEventListener("submit", function(event) {
             event.preventDefault();
 
+            // Collect form data
             const formData = new FormData(form);
             const templateParams = {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                attending: formData.get('attending'),
-                guests: formData.get('guests'),
-                children: formData.get('children'),
-                allergies: formData.get('allergies'),
+                name: formData.get("name"),           // Matches {{name}} in EmailJS template
+                email: formData.get("email"),         // Matches {{email}} in EmailJS template
+                attending: formData.get("attending"), // Matches {{attending}} in EmailJS template
+                guests: formData.get("guests"),       // Matches {{guests}} in EmailJS template
+                message: formData.get("message"),     // Matches {{message}} in EmailJS template
             };
 
-            emailjs
-                .send("service_lugz11s","template_02mfuph", templateParams) // Replace with actual Service ID and Template ID
+            // Send email via EmailJS
+            emailjs.send("service_lugz11s", "template_02mfuph", templateParams)
                 .then((response) => {
-                    console.log('Email sent successfully:', response.status, response.text);
-                    formContainer.style.display = 'none';
-                    thankYou.style.display = 'block';
+                    console.log("Email sent successfully:", response.status, response.text);
+                    form.reset(); // Reset form fields
+                    form.style.display = "none"; // Hide the form
+                    thankYouMessage.style.display = "block"; // Show thank you message
                 })
                 .catch((error) => {
-                    console.error('EmailJS Error:', error);
-                    alert('There was an error sending your RSVP. Please try again.');
+                    console.error("EmailJS Error:", error);
+                    alert("There was an error sending your RSVP. Please try again.");
                 });
         });
     </script>
 </body>
-
+</html>
