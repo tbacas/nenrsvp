@@ -59,7 +59,16 @@
             font-size: 18px;
         }
     </style>
-    <script src="https://cdn.emailjs.com/dist/email.min.js?version=3.11.0"></script>
+   <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "WWq4rWeSoXOXmWUko", // Replace with your actual public key
+          });
+       })();
+    </script>
 </head>
 <body>
     <div class="card">
