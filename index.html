@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP for the New England Nosh Party</title>
+    <title>RSVP for the New England Nosh</title>
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -16,46 +16,80 @@
     </script>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+      
     <div class="background">
         <div class="card">
             <div class="header">
-                <h1>We Look Forward to Welcoming You</h1>
-                <p>Please confirm your reservation below</p>
+                  <img src="your-crest.svg" alt="Crest Logo">
+                <div class="decorative-line"></div>
+                <p class="subheader">We look forward to welcoming you to this year's</p>
+                <h1>New England Nosh</h1>
+                <div class="decorative-line"></div>
+                <p class="subheader">Please confirm some information about when you will be joining us!</p>
             </div>
             <form id="rsvp-form">
                 <div class="input-group">
                     <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    <input type="text" id="name" name="name" placeholder="Your Full Name" required>
                 </div>
                 <div class="input-group">
                     <label for="email">Preferred Contact Email</label>
                     <input type="email" id="email" name="email" placeholder="Your Email" required>
                 </div>
                 <div class="input-group">
-                    <label for="attending">Will you attend?</label>
-                    <select id="attending" name="attending" required>
-                        <option value="" disabled selected>Select an option</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
+                    <label>Will you attend?</label>
+                    <div class="selector-buttons">
+                        <button type="button" class="selector-button" data-value="yes">Yes</button>
+                        <button type="button" class="selector-button" data-value="no">No</button>
+                        <input type="hidden" id="attending" name="attending" required>
+                    </div>
                 </div>
                 <div class="input-group">
-                    <label for="guests">Number of Guests</label>
-                    <input type="number" id="guests" name="guests" placeholder="0" min="0">
+                    <label>Number of Guests</label>
+                    <div class="guest-buttons">
+                        <button type="button" class="guest-button" data-value="1">1</button>
+                        <button type="button" class="guest-button" data-value="2">2</button>
+                        <button type="button" class="guest-button" data-value="3">3</button>
+                        <button type="button" class="guest-button" data-value="4">4</button>
+                        <button type="button" class="guest-button" data-value="5">5</button>
+                        <input type="hidden" id="guests" name="guests">
+                    </div>
                 </div>
                 <div class="input-group">
                     <label for="message">Additional Requests</label>
-                    <textarea id="message" name="message" placeholder="Let us know of any special accommodations"></textarea>
+                    <textarea id="message" name="message" placeholder=""></textarea>
                 </div>
                 <button type="submit">Confirm RSVP</button>
+                <div class="comic-container">
+                    <img src="the incident.jpg" alt="Comic about last year's event" class="comic">
+                </div>
             </form>
             <p id="thank-you" style="display: none;">Thank you for RSVPing! We look forward to welcoming you at the event.</p>
         </div>
     </div>
 
     <script>
+        // Handle selector buttons for attendance
+        document.querySelectorAll('.selector-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.selector-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById('attending').value = button.dataset.value;
+            });
+        });
+
+        // Handle guest buttons
+        document.querySelectorAll('.guest-button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.guest-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById('guests').value = button.dataset.value;
+            });
+        });
+
         // Handle form submission
         const form = document.getElementById("rsvp-form");
         const thankYouMessage = document.getElementById("thank-you");
@@ -63,7 +97,6 @@
         form.addEventListener("submit", function(event) {
             event.preventDefault();
 
-            // Collect form data
             const formData = new FormData(form);
             const templateParams = {
                 name: formData.get("name"),
@@ -73,13 +106,12 @@
                 message: formData.get("message"),
             };
 
-            // Send email via EmailJS
             emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
                 .then((response) => {
                     console.log("Email sent successfully:", response.status, response.text);
-                    form.reset(); // Reset form fields
-                    form.style.display = "none"; // Hide the form
-                    thankYouMessage.style.display = "block"; // Show thank you message
+                    form.reset();
+                    form.style.display = "none";
+                    thankYouMessage.style.display = "block";
                 })
                 .catch((error) => {
                     console.error("EmailJS Error:", error);
