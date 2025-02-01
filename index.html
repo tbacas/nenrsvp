@@ -18,8 +18,13 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
+     
+<div id="overlay">
+    <img src="your-crest.svg" alt="Crest Logo">
+</div>
 <body>
-      
+
+
     <div class="background">
         <div class="card">
             <div class="header">
@@ -119,5 +124,21 @@
                 });
         });
     </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            document.getElementById("overlay").classList.add("shrink");
+        }, 600); // Small delay before animation starts for elegance
+
+        setTimeout(() => {
+            document.getElementById("overlay").classList.add("fade-out");
+        }, 800); // Slightly longer delay to let the animation settle
+
+        setTimeout(() => {
+            document.getElementById("overlay").remove(); // Remove overlay from DOM
+        }, 3700); // Fully remove after fade-out for clean effect
+    });
+</script>
+
 </body>
 </html>

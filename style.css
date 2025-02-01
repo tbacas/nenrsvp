@@ -31,6 +31,51 @@ body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Fullscreen Overlay */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f5efe0; /* Match page background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Crest Animation */
+#overlay img {
+    width: 150px; /* Adjust as needed */
+    height: auto;
+    transform: scale(2);
+    transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                top 1.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                left 1.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                opacity 1s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2);
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.15)); /* Soft glow */
+}
+
+/* Move and Shrink Crest to Stay Centered */
+#overlay.shrink img {
+    top: 10vh;
+    left: 50%;
+    transform: translate(-50%, 0) scale(1);
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1)); /* Softer glow as it shrinks */
+}
+
+/* Fade Out Overlay */
+#overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* Card Styling */
 .card {
     background: #ffffff;
@@ -47,13 +92,13 @@ body {
 /* Header Styling */
 .header h1 {
     font-family: 'EB Garamond', serif;
-    font-size: 1.6rem; /* Reduced for smaller screens */
+    font-size: 1.6rem;
     color: #2e2e2e;
     margin: 10px 0;
 }
 
 .subheader {
-    font-size: 0.9rem; /* Adjusted for mobile */
+    font-size: 0.9rem;
     color: #555555;
     margin-bottom: 15px;
     line-height: 1.4;
@@ -68,14 +113,14 @@ body {
 
 /* Input Fields */
 .input-group {
-    margin-bottom: 15px; /* Reduced for tighter layout */
+    margin-bottom: 15px;
     text-align: left;
-    width: 100%; /* Ensure inputs stay within the card width */
-    padding: 0 10px; /* Add horizontal padding inside the card */
+    width: 100%;
+    padding: 0 10px;
 }
 
 .input-group label {
-    font-size: 0.95rem; /* Slightly smaller labels */
+    font-size: 0.95rem;
     color: #4d4d4d;
     margin-bottom: 5px;
     display: block;
@@ -91,7 +136,7 @@ input, textarea {
     background: #fafafa;
     margin-top: 5px;
     transition: border-color 0.3s ease;
-    box-sizing: border-box; /* Include padding in width calculation */
+    box-sizing: border-box;
 }
 
 input:focus, textarea:focus {
@@ -103,15 +148,15 @@ input:focus, textarea:focus {
 .selector-buttons,
 .guest-buttons {
     display: flex;
-    justify-content: space-around; /* Spacing between buttons */
+    justify-content: space-around;
     margin-top: 10px;
-    gap: 5px; /* Add spacing for clarity */
-    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+    gap: 5px;
+    flex-wrap: wrap;
 }
 
 .selector-button,
 .guest-button {
-    flex: 1 0 45%; /* Buttons scale and wrap */
+    flex: 1 0 45%;
     margin: 5px;
     padding: 10px;
     font-size: 0.9rem;
@@ -140,7 +185,7 @@ button[type="submit"] {
     cursor: pointer;
     border-radius: 8px;
     margin-top: 20px;
-    width: 100%; /* Full width for mobile */
+    width: 100%;
     transition: background-color 0.3s ease;
 }
 
